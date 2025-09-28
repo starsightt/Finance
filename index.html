@@ -11,183 +11,344 @@
             box-sizing: border-box;
         }
         
-        .pastel-blue {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f8fbff 100%);
+        :root {
+            --pastel-pink: #fdf2f8;
+            --pastel-blue: #f0f9ff;
+            --pastel-purple: #f5f3ff;
+            --pastel-green: #f0fdf4;
+            --pastel-yellow: #fffbeb;
+            --pastel-orange: #fff7ed;
+            --soft-gray: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
         }
         
-        .card-shadow {
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
+        .gradient-bg {
+            background: linear-gradient(135deg, 
+                var(--pastel-blue) 0%, 
+                var(--pastel-purple) 25%, 
+                var(--pastel-pink) 50%, 
+                var(--pastel-green) 75%, 
+                var(--pastel-yellow) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(248, 250, 252, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .tab-binder {
             position: relative;
-            background: #2196f3;
+            background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
             color: white;
-            border-radius: 8px 8px 0 0;
-            padding: 12px 20px;
-            margin-right: 4px;
+            border-radius: 16px 16px 0 0;
+            padding: 14px 24px;
+            margin-right: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(4px);
         }
         
         .tab-binder:before {
             content: '';
             position: absolute;
             top: 50%;
-            left: -8px;
-            width: 16px;
-            height: 16px;
-            background: #1976d2;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
             border-radius: 50%;
             transform: translateY(-50%);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
         }
         
         .tab-binder.active {
-            background: #1976d2;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            transform: translateY(0);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
         
         .tab-binder:hover {
-            background: #1976d2;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
         }
         
-        .sidebar {
-            background: linear-gradient(180deg, #bbdefb 0%, #e3f2fd 100%);
+        .month-btn, .year-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .month-btn:hover, .year-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+        }
+        
+        .month-btn.active, .year-btn.active {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
         }
         
         .calculator-btn {
-            background: #42a5f5;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 12px;
-            margin: 2px;
+            border-radius: 12px;
+            padding: 14px;
+            margin: 3px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
         }
         
         .calculator-btn:hover {
-            background: #1976d2;
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .calculator-btn:active {
+            transform: translateY(-1px) scale(1.02);
         }
         
         .category-card {
-            border-left: 4px solid;
-            transition: all 0.3s ease;
+            border-left: 6px solid;
+            border-radius: 16px;
         }
         
-        .category-card:hover {
-            transform: translateX(4px);
+        .menu-btn {
+            border-radius: 12px;
         }
         
-        .tree-icon {
-            color: #4caf50;
-            font-size: 1.2em;
-        }
-
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 16px 24px;
+            border-radius: 16px;
             color: white;
             font-weight: 500;
             z-index: 1000;
-            animation: slideIn 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .success { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
+        .error { 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+        }
+        .info { 
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
 
-        .success { background: #4caf50; }
-        .error { background: #f44336; }
-        .info { background: #2196f3; }
+        
+        .summary-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .form-input:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+        
+        .tree-icon {
+            color: #10b981;
+            filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));
+        }
+        
+        .security-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .year-selector {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+        }
     </style>
 </head>
-<body class="pastel-blue min-h-screen">
+<body class="gradient-bg min-h-screen pt-8">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="sidebar w-80 p-6 shadow-lg">
+        <div class="sidebar w-80 p-6 shadow-2xl">
             <div class="mb-8">
-                <h1 class="text-2xl font-bold text-blue-800 mb-2">
-                    <i class="fas fa-wallet mr-2"></i>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                    <i class="fas fa-wallet mr-3"></i>
                     Keuangan Pribadi
                 </h1>
-                <p class="text-blue-600 text-sm">Kelola uang dengan mudah</p>
-                <div class="mt-2 text-xs" id="last-saved">
-                    <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full inline-flex items-center">
-                        <i class="fas fa-check-circle mr-1"></i>
-                        Data Aman Tersimpan
-                    </div>
+                <p class="text-gray-600 text-sm mb-3">Kelola uang dengan mudah & cantik</p>
+                <div class="mt-3" id="last-saved">
                 </div>
             </div>
 
             <!-- Navigation Menu -->
             <div class="mb-8">
-                <h3 class="text-lg font-semibold text-blue-800 mb-4">Menu Utama</h3>
-                <div class="space-y-2">
-                    <button onclick="showPage('dashboard')" class="w-full text-left p-3 rounded-lg bg-white hover:bg-blue-50 transition-colors duration-200 card-shadow">
-                        <i class="fas fa-home mr-3 text-blue-500"></i>
-                        Dashboard
+                <h3 class="text-lg font-semibold text-gray-700 mb-4">✨ Menu Utama</h3>
+                <div class="space-y-3">
+                    <button onclick="showPage('dashboard')" class="menu-btn w-full text-left p-4 rounded-xl glass-card hover:bg-white transition-colors duration-300">
+                        <i class="fas fa-home mr-3 text-purple-500"></i>
+                        <span class="font-medium">Dashboard</span>
                     </button>
-                    <button onclick="showPage('wishlist')" class="w-full text-left p-3 rounded-lg bg-white hover:bg-blue-50 transition-colors duration-200 card-shadow">
+                    <button onclick="showPage('wishlist')" class="menu-btn w-full text-left p-4 rounded-xl glass-card hover:bg-white transition-colors duration-300">
                         <i class="fas fa-heart mr-3 text-pink-500"></i>
-                        Daftar Keinginan
+                        <span class="font-medium">Daftar Keinginan</span>
                     </button>
-                    <button onclick="showPage('targets')" class="w-full text-left p-3 rounded-lg bg-white hover:bg-blue-50 transition-colors duration-200 card-shadow">
+                    <button onclick="showPage('targets')" class="menu-btn w-full text-left p-4 rounded-xl glass-card hover:bg-white transition-colors duration-300">
                         <i class="fas fa-bullseye mr-3 text-green-500"></i>
-                        Target & Utang
+                        <span class="font-medium">Target & Utang</span>
                     </button>
                 </div>
             </div>
 
             <!-- Backup & Restore -->
             <div class="mb-8">
-                <h3 class="text-lg font-semibold text-blue-800 mb-4">
-                    <i class="fas fa-shield-alt mr-2"></i>
-                    🔒 DATA SUPER AMAN
+                <h3 class="text-lg font-semibold text-gray-700 mb-4">
+                    <i class="fas fa-shield-alt mr-2 text-green-500"></i>
+                    🔒 Keamanan Data
                 </h3>
-                <div class="bg-green-50 p-3 rounded-lg mb-4 text-sm">
-                    <div class="font-semibold text-green-800 mb-2">✅ JAMINAN KEAMANAN:</div>
-                    <div class="text-green-700 space-y-1">
-                        <div>🛡️ Tersimpan di 3 tempat berbeda</div>
-                        <div>⚡ Auto-save setiap 30 detik</div>
-                        <div>💾 Save otomatis saat tutup browser</div>
-                        <div>🔄 Backup manual tersedia</div>
+                <div class="glass-card p-4 rounded-xl mb-4 text-sm">
+                    <div class="font-semibold text-green-700 mb-3">✅ JAMINAN TRIPLE PROTECTION:</div>
+                    <div class="text-gray-600 space-y-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-database mr-2 text-blue-500"></i>
+                            <span>6 tempat penyimpanan berbeda</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-sync mr-2 text-green-500"></i>
+                            <span>Auto-save setiap 30 detik</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-save mr-2 text-purple-500"></i>
+                            <span>Save otomatis saat tutup</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-double mr-2 text-orange-500"></i>
+                            <span>Validasi checksum</span>
+                        </div>
                     </div>
                 </div>
-                <div class="space-y-2">
-                    <button onclick="exportData()" class="w-full text-left p-3 rounded-lg bg-white hover:bg-green-50 transition-colors duration-200 card-shadow">
+                <div class="space-y-3">
+                    <button onclick="exportData()" class="menu-btn w-full text-left p-3 rounded-xl glass-card hover:bg-green-50 transition-colors duration-300">
                         <i class="fas fa-download mr-3 text-green-500"></i>
-                        Download Backup
+                        <span class="font-medium">Download Backup</span>
                     </button>
-                    <label class="w-full text-left p-3 rounded-lg bg-white hover:bg-orange-50 transition-colors duration-200 card-shadow cursor-pointer block">
+                    <label class="menu-btn w-full text-left p-3 rounded-xl glass-card hover:bg-orange-50 transition-colors duration-300 cursor-pointer block">
                         <i class="fas fa-upload mr-3 text-orange-500"></i>
-                        Upload Backup
+                        <span class="font-medium">Upload Backup</span>
                         <input type="file" accept=".json" onchange="importData(event)" class="hidden">
                     </label>
-                    <button onclick="clearAllData()" class="w-full text-left p-3 rounded-lg bg-white hover:bg-red-50 transition-colors duration-200 card-shadow">
+                    <button onclick="clearAllData()" class="menu-btn w-full text-left p-3 rounded-xl glass-card hover:bg-red-50 transition-colors duration-300">
                         <i class="fas fa-trash mr-3 text-red-500"></i>
-                        Hapus Semua Data
+                        <span class="font-medium">Hapus Semua Data</span>
                     </button>
                 </div>
             </div>
 
             <!-- Calculator -->
             <div class="mb-8">
-                <h3 class="text-lg font-semibold text-blue-800 mb-4">Kalkulator</h3>
-                <div class="bg-white p-4 rounded-lg card-shadow">
-                    <input type="text" id="calculator-display" class="w-full p-2 mb-3 border rounded text-right text-lg font-mono" readonly>
-                    <div class="grid grid-cols-4 gap-1">
-                        <button onclick="clearCalculator()" class="calculator-btn bg-red-500 hover:bg-red-600">C</button>
+                <h3 class="text-lg font-semibold text-gray-700 mb-4">🧮 Kalkulator</h3>
+                <div class="glass-card p-4 rounded-xl">
+                    <input type="text" id="calculator-display" class="w-full p-3 mb-4 border-2 border-purple-200 rounded-xl text-right text-lg font-mono focus:border-purple-400 focus:outline-none transition-all duration-300" readonly>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="clearCalculator()" class="calculator-btn bg-gradient-to-r from-red-400 to-red-500">C</button>
                         <button onclick="appendToCalculator('/')" class="calculator-btn">÷</button>
                         <button onclick="appendToCalculator('*')" class="calculator-btn">×</button>
-                        <button onclick="deleteLast()" class="calculator-btn bg-orange-500 hover:bg-orange-600">⌫</button>
+                        <button onclick="deleteLast()" class="calculator-btn bg-gradient-to-r from-orange-400 to-orange-500">⌫</button>
                         
                         <button onclick="appendToCalculator('7')" class="calculator-btn">7</button>
                         <button onclick="appendToCalculator('8')" class="calculator-btn">8</button>
@@ -202,7 +363,7 @@
                         <button onclick="appendToCalculator('1')" class="calculator-btn">1</button>
                         <button onclick="appendToCalculator('2')" class="calculator-btn">2</button>
                         <button onclick="appendToCalculator('3')" class="calculator-btn">3</button>
-                        <button onclick="calculate()" class="calculator-btn bg-green-500 hover:bg-green-600 row-span-2">=</button>
+                        <button onclick="calculate()" class="calculator-btn bg-gradient-to-r from-green-400 to-green-500 row-span-2">=</button>
                         
                         <button onclick="appendToCalculator('0')" class="calculator-btn col-span-2">0</button>
                         <button onclick="appendToCalculator('.')" class="calculator-btn">.</button>
@@ -214,7 +375,7 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
             <!-- User Tabs -->
-            <div class="bg-white shadow-sm p-4">
+            <div class="glass-card shadow-lg p-4 fade-in">
                 <div class="flex">
                     <div class="tab-binder active" onclick="switchUser('user1')">
                         <i class="fas fa-user mr-2"></i>
@@ -232,52 +393,71 @@
             </div>
 
             <!-- Dashboard Page -->
-            <div id="dashboard-page" class="flex-1 p-6">
-                <!-- Month Navigation -->
-                <div class="mb-6">
+            <div id="dashboard-page" class="flex-1 p-6 overflow-y-auto scroll-smooth">
+                <!-- Year & Month Navigation -->
+                <div class="mb-6 fade-in">
+                    <!-- Year Selector -->
+                    <div class="year-selector mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">📅 Pilih Tahun:</label>
+                        <div class="flex space-x-2 overflow-x-auto pb-2">
+                            <button onclick="switchYear('2023')" class="year-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">2023</button>
+                            <button onclick="switchYear('2024')" class="year-btn active px-4 py-2 bg-purple-500 text-white rounded-lg whitespace-nowrap">2024</button>
+                            <button onclick="switchYear('2025')" class="year-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">2025</button>
+                            <button onclick="switchYear('2026')" class="year-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">2026</button>
+                            <button onclick="switchYear('2027')" class="year-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">2027</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Month Selector -->
                     <div class="flex space-x-2 overflow-x-auto pb-2">
-                        <button onclick="switchMonth('jan')" class="month-btn active px-4 py-2 bg-blue-500 text-white rounded-lg whitespace-nowrap">Januari</button>
-                        <button onclick="switchMonth('feb')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Februari</button>
-                        <button onclick="switchMonth('mar')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Maret</button>
-                        <button onclick="switchMonth('apr')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">April</button>
-                        <button onclick="switchMonth('may')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Mei</button>
-                        <button onclick="switchMonth('jun')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Juni</button>
-                        <button onclick="switchMonth('jul')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Juli</button>
-                        <button onclick="switchMonth('aug')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Agustus</button>
-                        <button onclick="switchMonth('sep')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">September</button>
-                        <button onclick="switchMonth('oct')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Oktober</button>
-                        <button onclick="switchMonth('nov')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">November</button>
-                        <button onclick="switchMonth('dec')" class="month-btn px-4 py-2 bg-blue-200 text-blue-800 rounded-lg whitespace-nowrap">Desember</button>
+                        <button onclick="switchMonth('jan')" class="month-btn active px-4 py-2 bg-purple-500 text-white rounded-lg whitespace-nowrap">Januari</button>
+                        <button onclick="switchMonth('feb')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Februari</button>
+                        <button onclick="switchMonth('mar')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Maret</button>
+                        <button onclick="switchMonth('apr')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">April</button>
+                        <button onclick="switchMonth('may')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Mei</button>
+                        <button onclick="switchMonth('jun')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Juni</button>
+                        <button onclick="switchMonth('jul')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Juli</button>
+                        <button onclick="switchMonth('aug')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Agustus</button>
+                        <button onclick="switchMonth('sep')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">September</button>
+                        <button onclick="switchMonth('oct')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Oktober</button>
+                        <button onclick="switchMonth('nov')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">November</button>
+                        <button onclick="switchMonth('dec')" class="month-btn px-4 py-2 bg-purple-200 text-purple-800 rounded-lg whitespace-nowrap">Desember</button>
                     </div>
                 </div>
 
                 <!-- Summary Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="summary-card p-6 rounded-2xl bounce-in" style="animation-delay: 0.1s">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-600 text-sm">Total Pemasukan</p>
-                                <p class="text-2xl font-bold text-green-600" id="total-income">Rp 0</p>
+                                <p class="text-gray-600 text-sm font-medium">💰 Total Pemasukan</p>
+                                <p class="text-3xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent" id="total-income">Rp 0</p>
                             </div>
-                            <i class="fas fa-arrow-up text-3xl text-green-500"></i>
+                            <div class="p-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl">
+                                <i class="fas fa-arrow-up text-3xl text-green-500"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="summary-card p-6 rounded-2xl bounce-in" style="animation-delay: 0.2s">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-600 text-sm">Total Pengeluaran</p>
-                                <p class="text-2xl font-bold text-red-600" id="total-expense">Rp 0</p>
+                                <p class="text-gray-600 text-sm font-medium">💸 Total Pengeluaran</p>
+                                <p class="text-3xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent" id="total-expense">Rp 0</p>
                             </div>
-                            <i class="fas fa-arrow-down text-3xl text-red-500"></i>
+                            <div class="p-4 bg-gradient-to-r from-red-100 to-pink-100 rounded-2xl">
+                                <i class="fas fa-arrow-down text-3xl text-red-500"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="summary-card p-6 rounded-2xl bounce-in" style="animation-delay: 0.3s">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-600 text-sm">Sisa Uang</p>
-                                <p class="text-2xl font-bold text-blue-600" id="remaining-money">Rp 0</p>
+                                <p class="text-gray-600 text-sm font-medium">💎 Sisa Uang</p>
+                                <p class="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent" id="remaining-money">Rp 0</p>
                             </div>
-                            <i class="fas fa-wallet text-3xl text-blue-500"></i>
+                            <div class="p-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl">
+                                <i class="fas fa-wallet text-3xl text-blue-500"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -285,51 +465,51 @@
                 <!-- Income and Expense Sections -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Income Section -->
-                    <div class="bg-white p-6 rounded-xl card-shadow">
-                        <h3 class="text-xl font-bold text-green-600 mb-4">
-                            <i class="fas fa-plus-circle mr-2"></i>
+                    <div class="glass-card p-6 rounded-2xl fade-in">
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-6">
+                            <i class="fas fa-plus-circle mr-3"></i>
                             Pemasukan
                         </h3>
                         
                         <!-- Add Income Form -->
-                        <form onsubmit="addTransaction(event, 'income')" class="mb-6 p-4 bg-green-50 rounded-lg">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <input type="number" placeholder="Jumlah" class="p-2 border rounded-lg" required>
-                                <input type="date" class="p-2 border rounded-lg" required>
-                                <input type="text" placeholder="Keterangan" class="p-2 border rounded-lg" required>
+                        <form onsubmit="addTransaction(event, 'income')" class="mb-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <input type="number" placeholder="💰 Jumlah" class="form-input p-3 border rounded-xl" required>
+                                <input type="date" class="form-input p-3 border rounded-xl" required>
+                                <input type="text" placeholder="📝 Keterangan" class="form-input p-3 border rounded-xl" required>
                             </div>
-                            <button type="submit" class="mt-3 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                            <button type="submit" class="mt-4 px-6 py-3 btn-success text-white rounded-xl font-medium transition-all duration-300">
                                 <i class="fas fa-plus mr-2"></i>Tambah Pemasukan
                             </button>
                         </form>
 
                         <!-- Income List -->
-                        <div id="income-list" class="space-y-3">
+                        <div id="income-list" class="space-y-4">
                             <!-- Income items will be added here -->
                         </div>
                     </div>
 
                     <!-- Expense Section -->
-                    <div class="bg-white p-6 rounded-xl card-shadow">
-                        <h3 class="text-xl font-bold text-red-600 mb-4">
-                            <i class="fas fa-minus-circle mr-2"></i>
+                    <div class="glass-card p-6 rounded-2xl fade-in">
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent mb-6">
+                            <i class="fas fa-minus-circle mr-3"></i>
                             Pengeluaran
                         </h3>
                         
                         <!-- Add Expense Form -->
-                        <form onsubmit="addTransaction(event, 'expense')" class="mb-6 p-4 bg-red-50 rounded-lg">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <input type="number" placeholder="Jumlah" class="p-2 border rounded-lg" required>
-                                <input type="date" class="p-2 border rounded-lg" required>
-                                <input type="text" placeholder="Keterangan" class="p-2 border rounded-lg" required>
+                        <form onsubmit="addTransaction(event, 'expense')" class="mb-6 p-5 bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <input type="number" placeholder="💸 Jumlah" class="form-input p-3 border rounded-xl" required>
+                                <input type="date" class="form-input p-3 border rounded-xl" required>
+                                <input type="text" placeholder="📝 Keterangan" class="form-input p-3 border rounded-xl" required>
                             </div>
-                            <button type="submit" class="mt-3 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                            <button type="submit" class="mt-4 px-6 py-3 btn-danger text-white rounded-xl font-medium transition-all duration-300">
                                 <i class="fas fa-minus mr-2"></i>Tambah Pengeluaran
                             </button>
                         </form>
 
                         <!-- Expense List -->
-                        <div id="expense-list" class="space-y-3">
+                        <div id="expense-list" class="space-y-4">
                             <!-- Expense items will be added here -->
                         </div>
                     </div>
@@ -337,53 +517,53 @@
             </div>
 
             <!-- Wishlist Page -->
-            <div id="wishlist-page" class="flex-1 p-6 hidden">
-                <h2 class="text-3xl font-bold text-blue-800 mb-6">
-                    <i class="fas fa-heart mr-3 text-pink-500"></i>
+            <div id="wishlist-page" class="flex-1 p-6 hidden overflow-y-auto scroll-smooth">
+                <h2 class="text-4xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent mb-8 fade-in">
+                    <i class="fas fa-heart mr-4 text-pink-500"></i>
                     Daftar Keinginan
                 </h2>
 
                 <!-- Add Category Form -->
-                <div class="bg-white p-6 rounded-xl card-shadow mb-6">
-                    <h3 class="text-lg font-semibold mb-4">Tambah Kategori Baru</h3>
-                    <form onsubmit="addCategory(event)" class="flex gap-3">
-                        <input type="text" placeholder="Nama Kategori" class="flex-1 p-2 border rounded-lg" required>
-                        <input type="color" value="#3b82f6" class="w-16 h-10 border rounded-lg">
-                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                <div class="glass-card p-6 rounded-2xl mb-8 fade-in">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-700">✨ Tambah Kategori Baru</h3>
+                    <form onsubmit="addCategory(event)" class="flex gap-4">
+                        <input type="text" placeholder="🏷️ Nama Kategori" class="flex-1 form-input p-3 border rounded-xl" required>
+                        <input type="color" value="#8b5cf6" class="w-20 h-12 border-2 border-purple-200 rounded-xl cursor-pointer">
+                        <button type="submit" class="px-6 py-3 btn-primary text-white rounded-xl font-medium">
                             <i class="fas fa-plus mr-2"></i>Tambah
                         </button>
                     </form>
                 </div>
 
                 <!-- Categories -->
-                <div id="categories-container" class="space-y-6">
+                <div id="categories-container" class="space-y-8">
                     <!-- Categories will be added here -->
                 </div>
             </div>
 
             <!-- Targets Page -->
-            <div id="targets-page" class="flex-1 p-6 hidden">
-                <h2 class="text-3xl font-bold text-blue-800 mb-6">
-                    <i class="tree-icon fas fa-tree mr-3"></i>
-                    Target & Utang
+            <div id="targets-page" class="flex-1 p-6 hidden overflow-y-auto scroll-smooth">
+                <h2 class="text-4xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-8 fade-in">
+                    <i class="tree-icon fas fa-seedling mr-4"></i>
+                    Target & Tabungan
                 </h2>
 
                 <!-- Add Target Form -->
-                <div class="bg-white p-6 rounded-xl card-shadow mb-6">
-                    <h3 class="text-lg font-semibold mb-4">Tambah Target Baru</h3>
-                    <form onsubmit="addTarget(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <input type="text" placeholder="Nama Target" class="p-2 border rounded-lg" required>
-                        <input type="number" placeholder="Jumlah Target (Rp)" class="p-2 border rounded-lg" required>
-                        <input type="date" placeholder="Tenggat Waktu" class="p-2 border rounded-lg" required>
-                        <select class="p-2 border rounded-lg" required>
-                            <option value="">Pilih Prioritas</option>
-                            <option value="sangat-penting">Sangat Penting</option>
-                            <option value="penting">Penting</option>
-                            <option value="sedikit-penting">Sedikit Penting</option>
-                            <option value="tidak-penting">Tidak Terlalu Penting</option>
+                <div class="glass-card p-6 rounded-2xl mb-8 fade-in">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-700">🎯 Tambah Target Baru</h3>
+                    <form onsubmit="addTarget(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <input type="text" placeholder="🎯 Nama Target" class="form-input p-3 border rounded-xl" required>
+                        <input type="number" placeholder="💰 Jumlah Target (Rp)" class="form-input p-3 border rounded-xl" required>
+                        <input type="date" placeholder="📅 Tenggat Waktu" class="form-input p-3 border rounded-xl" required>
+                        <select class="form-input p-3 border rounded-xl" required>
+                            <option value="">⭐ Pilih Prioritas</option>
+                            <option value="sangat-penting">🔥 Sangat Penting</option>
+                            <option value="penting">⚡ Penting</option>
+                            <option value="sedikit-penting">💫 Sedikit Penting</option>
+                            <option value="tidak-penting">💤 Tidak Terlalu Penting</option>
                         </select>
-                        <input type="text" placeholder="Keterangan" class="p-2 border rounded-lg md:col-span-2">
-                        <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 md:col-span-2">
+                        <input type="text" placeholder="📝 Keterangan" class="form-input p-3 border rounded-xl md:col-span-2">
+                        <button type="submit" class="px-6 py-3 btn-success text-white rounded-xl font-medium md:col-span-2">
                             <i class="tree-icon fas fa-seedling mr-2"></i>Tambah Target
                         </button>
                     </form>
@@ -401,6 +581,7 @@
         // Global variables
         let currentUser = 'user1';
         let currentMonth = 'jan';
+        let currentYear = '2024';
         let currentPage = 'dashboard';
         let transactions = {};
         let categories = [];
@@ -408,9 +589,9 @@
         let calculatorValue = '';
 
         // Storage key
-        const STORAGE_KEY = 'keuangan-app-data-v2';
+        const STORAGE_KEY = 'keuangan-app-data-v3';
 
-        // Show notification
+        // Show notification with smooth animation
         function showNotification(message, type = 'info') {
             // Remove existing notifications
             document.querySelectorAll('.notification').forEach(n => n.remove());
@@ -424,11 +605,12 @@
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.remove();
+                notification.style.animation = 'slideInBounce 0.3s reverse';
+                setTimeout(() => notification.remove(), 300);
             }, 4000);
         }
 
-        // Save data to localStorage with multiple fallbacks
+        // Enhanced save data with triple protection
         function saveData() {
             try {
                 const data = {
@@ -437,35 +619,36 @@
                     targets: targets,
                     currentUser: currentUser,
                     currentMonth: currentMonth,
+                    currentYear: currentYear,
                     lastSaved: new Date().toISOString(),
-                    version: '2.0',
+                    version: '3.0',
                     checksum: generateChecksum(transactions, categories, targets)
                 };
                 
                 const dataString = JSON.stringify(data);
                 
-                // Primary storage
+                // Primary storage with 6 different keys for maximum safety
                 localStorage.setItem(STORAGE_KEY, dataString);
-                
-                // Backup storage with different keys
                 localStorage.setItem(STORAGE_KEY + '-backup1', dataString);
                 localStorage.setItem(STORAGE_KEY + '-backup2', dataString);
+                localStorage.setItem(STORAGE_KEY + '-backup3', dataString);
                 
-                // Emergency backup in different format
+                // Emergency backup with timestamp
                 localStorage.setItem('emergency-backup-' + Date.now(), dataString);
+                localStorage.setItem('last-known-good-backup', dataString);
                 
-                // Keep only last 3 emergency backups
+                // Keep only last 5 emergency backups
                 cleanupEmergencyBackups();
                 
-                // Update last saved display with success indicator
+                // Update last saved display with beautiful animation
                 document.getElementById('last-saved').innerHTML = `
-                    <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full inline-flex items-center">
-                        <i class="fas fa-shield-alt mr-1"></i>
-                        Tersimpan: ${new Date().toLocaleString('id-ID')}
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        Tersimpan: ${new Date().toLocaleTimeString('id-ID')}
                     </div>
                 `;
                 
-                console.log('✅ Data saved successfully with triple backup');
+                console.log('✅ Data saved with TRIPLE PROTECTION');
                 return true;
             } catch (error) {
                 console.error('❌ Error saving data:', error);
@@ -481,7 +664,7 @@
             for (let i = 0; i < str.length; i++) {
                 const char = str.charCodeAt(i);
                 hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32-bit integer
+                hash = hash & hash;
             }
             return hash.toString();
         }
@@ -489,14 +672,20 @@
         // Clean up old emergency backups
         function cleanupEmergencyBackups() {
             const keys = Object.keys(localStorage).filter(key => key.startsWith('emergency-backup-'));
-            if (keys.length > 3) {
-                keys.sort().slice(0, -3).forEach(key => localStorage.removeItem(key));
+            if (keys.length > 5) {
+                keys.sort().slice(0, -5).forEach(key => localStorage.removeItem(key));
             }
         }
 
-        // Load data from localStorage with fallbacks
+        // Enhanced load data with multiple fallbacks
         function loadData() {
-            const keys = [STORAGE_KEY, STORAGE_KEY + '-backup1', STORAGE_KEY + '-backup2'];
+            const keys = [
+                STORAGE_KEY, 
+                STORAGE_KEY + '-backup1', 
+                STORAGE_KEY + '-backup2', 
+                STORAGE_KEY + '-backup3',
+                'last-known-good-backup'
+            ];
             
             // Try main backups first
             for (let key of keys) {
@@ -505,9 +694,8 @@
                     if (savedData) {
                         const data = JSON.parse(savedData);
                         
-                        // Validate data structure and checksum
                         if (data.transactions && data.categories !== undefined && data.targets !== undefined) {
-                            // Verify data integrity if checksum exists
+                            // Verify data integrity
                             if (data.checksum) {
                                 const currentChecksum = generateChecksum(data.transactions, data.categories, data.targets);
                                 if (currentChecksum !== data.checksum) {
@@ -521,15 +709,16 @@
                             targets = data.targets || [];
                             currentUser = data.currentUser || 'user1';
                             currentMonth = data.currentMonth || 'jan';
+                            currentYear = data.currentYear || '2024';
                             
                             console.log('✅ Data loaded from:', key);
-                            showNotification('Data berhasil dimuat!', 'success');
+                            showNotification('Data berhasil dimuat dengan aman!', 'success');
                             
                             if (data.lastSaved) {
                                 document.getElementById('last-saved').innerHTML = `
-                                    <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full inline-flex items-center">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        Dimuat: ${new Date(data.lastSaved).toLocaleString('id-ID')}
+                                    <div class="security-badge">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        Dimuat: ${new Date(data.lastSaved).toLocaleTimeString('id-ID')}
                                     </div>
                                 `;
                             }
@@ -542,8 +731,11 @@
                 }
             }
             
-            // Try emergency backups if main backups fail
-            const emergencyKeys = Object.keys(localStorage).filter(key => key.startsWith('emergency-backup-')).sort().reverse();
+            // Try emergency backups
+            const emergencyKeys = Object.keys(localStorage)
+                .filter(key => key.startsWith('emergency-backup-'))
+                .sort().reverse();
+                
             for (let key of emergencyKeys) {
                 try {
                     const savedData = localStorage.getItem(key);
@@ -555,6 +747,7 @@
                             targets = data.targets || [];
                             currentUser = data.currentUser || 'user1';
                             currentMonth = data.currentMonth || 'jan';
+                            currentYear = data.currentYear || '2024';
                             
                             console.log('🚨 Data recovered from emergency backup:', key);
                             showNotification('Data dipulihkan dari backup darurat!', 'info');
@@ -570,7 +763,7 @@
             return false;
         }
 
-        // Export data as JSON file
+        // Export data
         function exportData() {
             try {
                 const data = {
@@ -578,8 +771,8 @@
                     categories: categories,
                     targets: targets,
                     exportDate: new Date().toISOString(),
-                    version: '2.0',
-                    appName: 'Keuangan Pribadi'
+                    version: '3.0',
+                    appName: 'Keuangan Pribadi - Beautiful Edition'
                 };
                 
                 const dataStr = JSON.stringify(data, null, 2);
@@ -594,14 +787,14 @@
                 document.body.removeChild(link);
                 
                 URL.revokeObjectURL(url);
-                showNotification('Backup berhasil didownload!', 'success');
+                showNotification('✨ Backup berhasil didownload!', 'success');
             } catch (error) {
                 console.error('Export error:', error);
                 showNotification('Gagal export data!', 'error');
             }
         }
 
-        // Import data from JSON file
+        // Import data
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -611,7 +804,6 @@
                 try {
                     const data = JSON.parse(e.target.result);
                     
-                    // Validate imported data
                     if (!data.transactions || data.categories === undefined || data.targets === undefined) {
                         throw new Error('Invalid backup file format');
                     }
@@ -621,16 +813,15 @@
                         categories = data.categories || [];
                         targets = data.targets || [];
                         
-                        // Save imported data
                         if (saveData()) {
-                            // Update UI
                             updateUserTabs();
                             updateMonthTabs();
+                            updateYearTabs();
                             updateDashboard();
                             renderCategories();
                             renderTargets();
                             
-                            showNotification('Data berhasil diimport!', 'success');
+                            showNotification('✨ Data berhasil diimport!', 'success');
                         }
                     }
                 } catch (error) {
@@ -638,7 +829,6 @@
                     showNotification('File backup tidak valid!', 'error');
                 }
                 
-                // Reset file input
                 event.target.value = '';
             };
             reader.readAsText(file);
@@ -648,10 +838,14 @@
         function clearAllData() {
             if (confirm('⚠️ HAPUS SEMUA DATA?\n\nTindakan ini tidak dapat dibatalkan!')) {
                 if (confirm('🚨 Yakin 100% ingin menghapus semua data?')) {
-                    // Clear localStorage
-                    localStorage.removeItem(STORAGE_KEY);
-                    localStorage.removeItem(STORAGE_KEY + '-backup1');
-                    localStorage.removeItem(STORAGE_KEY + '-backup2');
+                    // Clear all storage keys
+                    [STORAGE_KEY, STORAGE_KEY + '-backup1', STORAGE_KEY + '-backup2', STORAGE_KEY + '-backup3', 'last-known-good-backup']
+                        .forEach(key => localStorage.removeItem(key));
+                    
+                    // Clear emergency backups
+                    Object.keys(localStorage)
+                        .filter(key => key.startsWith('emergency-backup-'))
+                        .forEach(key => localStorage.removeItem(key));
                     
                     // Reset variables
                     transactions = {};
@@ -659,52 +853,54 @@
                     targets = [];
                     currentUser = 'user1';
                     currentMonth = 'jan';
+                    currentYear = '2024';
                     
-                    // Reinitialize
                     initializeData();
-                    showNotification('Semua data telah dihapus!', 'info');
+                    showNotification('🗑️ Semua data telah dihapus!', 'info');
                 }
             }
         }
 
-        // Initialize data structure
+        // Initialize data structure with years support
         function initializeData() {
-            // Try to load saved data first
             if (loadData()) {
                 updateUserTabs();
                 updateMonthTabs();
+                updateYearTabs();
                 renderCategories();
                 renderTargets();
                 updateDashboard();
                 return;
             }
             
-            // No saved data, initialize with defaults
             const users = ['user1', 'user2', 'user3'];
             const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+            const years = ['2023', '2024', '2025', '2026', '2027'];
             
             users.forEach(user => {
                 transactions[user] = {};
-                months.forEach(month => {
-                    transactions[user][month] = {
-                        income: [],
-                        expense: []
-                    };
+                years.forEach(year => {
+                    transactions[user][year] = {};
+                    months.forEach(month => {
+                        transactions[user][year][month] = {
+                            income: [],
+                            expense: []
+                        };
+                    });
                 });
             });
 
-            // Add sample categories
             categories = [
-                { name: 'Elektronik', color: '#3b82f6', items: [] },
+                { name: 'Elektronik', color: '#8b5cf6', items: [] },
                 { name: 'Fashion', color: '#ec4899', items: [] },
                 { name: 'Makanan', color: '#f59e0b', items: [] }
             ];
 
             renderCategories();
-            saveData(); // Save initial data
+            saveData();
         }
 
-        // Update user tabs to reflect current user
+        // Update user tabs
         function updateUserTabs() {
             document.querySelectorAll('.tab-binder').forEach((tab, index) => {
                 tab.classList.remove('active');
@@ -716,7 +912,20 @@
             });
         }
 
-        // Update month tabs to reflect current month
+        // Update year tabs
+        function updateYearTabs() {
+            document.querySelectorAll('.year-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-500', 'text-white');
+                btn.classList.add('bg-purple-200', 'text-purple-800');
+                
+                if (btn.textContent.trim() === currentYear) {
+                    btn.classList.remove('bg-purple-200', 'text-purple-800');
+                    btn.classList.add('active', 'bg-purple-500', 'text-white');
+                }
+            });
+        }
+
+        // Update month tabs
         function updateMonthTabs() {
             const monthMap = {
                 'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'may': 4, 'jun': 5,
@@ -724,14 +933,22 @@
             };
             
             document.querySelectorAll('.month-btn').forEach((btn, index) => {
-                btn.classList.remove('active', 'bg-blue-500', 'text-white');
-                btn.classList.add('bg-blue-200', 'text-blue-800');
+                btn.classList.remove('active', 'bg-purple-500', 'text-white');
+                btn.classList.add('bg-purple-200', 'text-purple-800');
                 
                 if (index === monthMap[currentMonth]) {
-                    btn.classList.remove('bg-blue-200', 'text-blue-800');
-                    btn.classList.add('active', 'bg-blue-500', 'text-white');
+                    btn.classList.remove('bg-purple-200', 'text-purple-800');
+                    btn.classList.add('active', 'bg-purple-500', 'text-white');
                 }
             });
+        }
+
+        // Year switching
+        function switchYear(year) {
+            currentYear = year;
+            updateYearTabs();
+            updateDashboard();
+            saveData();
         }
 
         // User switching
@@ -750,14 +967,24 @@
             saveData();
         }
 
-        // Page switching
+        // Page switching with smooth animation
         function showPage(page) {
             currentPage = page;
-            document.querySelectorAll('[id$="-page"]').forEach(p => p.classList.add('hidden'));
-            document.getElementById(page + '-page').classList.remove('hidden');
+            document.querySelectorAll('[id$="-page"]').forEach(p => {
+                p.classList.add('hidden');
+                p.style.opacity = '0';
+            });
+            
+            const targetPage = document.getElementById(page + '-page');
+            targetPage.classList.remove('hidden');
+            
+            setTimeout(() => {
+                targetPage.style.opacity = '1';
+                targetPage.style.transition = 'opacity 0.3s ease';
+            }, 50);
         }
 
-        // Add transaction
+        // Add transaction with animation
         function addTransaction(event, type) {
             event.preventDefault();
             const form = event.target;
@@ -770,78 +997,128 @@
                 description: inputs[2].value
             };
 
-            transactions[currentUser][currentMonth][type].push(transaction);
+            // Ensure year structure exists
+            if (!transactions[currentUser][currentYear]) {
+                transactions[currentUser][currentYear] = {};
+            }
+            if (!transactions[currentUser][currentYear][currentMonth]) {
+                transactions[currentUser][currentYear][currentMonth] = { income: [], expense: [] };
+            }
+
+            transactions[currentUser][currentYear][currentMonth][type].push(transaction);
             form.reset();
             updateDashboard();
             saveData();
+            
+            showNotification(`✨ ${type === 'income' ? 'Pemasukan' : 'Pengeluaran'} berhasil ditambahkan!`, 'success');
         }
 
         // Delete transaction
         function deleteTransaction(type, id) {
-            if (confirm('Hapus transaksi ini?')) {
-                transactions[currentUser][currentMonth][type] = 
-                    transactions[currentUser][currentMonth][type].filter(t => t.id !== id);
+            if (confirm('🗑️ Hapus transaksi ini?')) {
+                transactions[currentUser][currentYear][currentMonth][type] = 
+                    transactions[currentUser][currentYear][currentMonth][type].filter(t => t.id !== id);
                 updateDashboard();
                 saveData();
+                showNotification('Transaksi berhasil dihapus!', 'info');
             }
         }
 
         // Edit transaction
         function editTransaction(type, id) {
-            const transaction = transactions[currentUser][currentMonth][type].find(t => t.id === id);
+            const transaction = transactions[currentUser][currentYear][currentMonth][type].find(t => t.id === id);
             if (transaction) {
-                const newAmount = prompt('Jumlah baru:', transaction.amount);
-                const newDescription = prompt('Keterangan baru:', transaction.description);
+                const newAmount = prompt('💰 Jumlah baru:', transaction.amount);
+                const newDescription = prompt('📝 Keterangan baru:', transaction.description);
                 
                 if (newAmount !== null && newDescription !== null) {
                     transaction.amount = parseInt(newAmount) || transaction.amount;
                     transaction.description = newDescription || transaction.description;
                     updateDashboard();
                     saveData();
+                    showNotification('✨ Transaksi berhasil diupdate!', 'success');
                 }
             }
         }
 
-        // Update dashboard
+        // Update dashboard with smooth animations
         function updateDashboard() {
-            const currentData = transactions[currentUser][currentMonth];
+            // Ensure data structure exists
+            if (!transactions[currentUser] || !transactions[currentUser][currentYear] || !transactions[currentUser][currentYear][currentMonth]) {
+                if (!transactions[currentUser]) transactions[currentUser] = {};
+                if (!transactions[currentUser][currentYear]) transactions[currentUser][currentYear] = {};
+                if (!transactions[currentUser][currentYear][currentMonth]) {
+                    transactions[currentUser][currentYear][currentMonth] = { income: [], expense: [] };
+                }
+            }
+
+            const currentData = transactions[currentUser][currentYear][currentMonth];
             const totalIncome = currentData.income.reduce((sum, t) => sum + t.amount, 0);
             const totalExpense = currentData.expense.reduce((sum, t) => sum + t.amount, 0);
             const remaining = totalIncome - totalExpense;
 
-            document.getElementById('total-income').textContent = formatCurrency(totalIncome);
-            document.getElementById('total-expense').textContent = formatCurrency(totalExpense);
-            document.getElementById('remaining-money').textContent = formatCurrency(remaining);
+            // Animate number changes
+            animateValue('total-income', totalIncome);
+            animateValue('total-expense', totalExpense);
+            animateValue('remaining-money', remaining);
 
             renderTransactions('income');
             renderTransactions('expense');
         }
 
-        // Render transactions
+        // Animate number values
+        function animateValue(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const startValue = parseInt(element.textContent.replace(/[^\d]/g, '')) || 0;
+            const duration = 800;
+            const startTime = performance.now();
+
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+                const currentValue = Math.round(startValue + (targetValue - startValue) * easeProgress);
+                
+                element.textContent = formatCurrency(currentValue);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                }
+            }
+            
+            requestAnimationFrame(updateValue);
+        }
+
+        // Render transactions with beautiful cards
         function renderTransactions(type) {
             const container = document.getElementById(type + '-list');
-            const transactions_list = transactions[currentUser][currentMonth][type];
+            const transactions_list = transactions[currentUser][currentYear][currentMonth][type];
             
-            container.innerHTML = transactions_list.map(transaction => `
-                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div class="flex-1">
-                        <div class="flex justify-between items-start">
-                            <span class="font-semibold">${transaction.description}</span>
-                            <span class="font-bold ${type === 'income' ? 'text-green-600' : 'text-red-600'}">
-                                ${formatCurrency(transaction.amount)}
-                            </span>
+            container.innerHTML = transactions_list.map((transaction, index) => `
+                <div class="glass-card p-4 rounded-xl transition-all duration-300 hover:transform hover:scale-105 fade-in" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-semibold text-gray-800">${transaction.description}</span>
+                                <span class="font-bold text-xl ${type === 'income' ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-gradient-to-r from-red-500 to-pink-500'} bg-clip-text text-transparent">
+                                    ${formatCurrency(transaction.amount)}
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-500 flex items-center">
+                                <i class="fas fa-calendar mr-2"></i>
+                                ${formatDate(transaction.date)}
+                            </p>
                         </div>
-                        <p class="text-sm text-gray-600">${formatDate(transaction.date)}</p>
-                    </div>
-                    <div class="ml-4 space-x-2">
-                        <button onclick="editTransaction('${type}', ${transaction.id})" 
-                                class="text-blue-500 hover:text-blue-700">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteTransaction('${type}', ${transaction.id})" 
-                                class="text-red-500 hover:text-red-700">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        <div class="ml-4 space-x-3">
+                            <button onclick="editTransaction('${type}', ${transaction.id})" 
+                                    class="text-blue-500 hover:text-blue-700 transition-colors duration-200 p-2 rounded-lg hover:bg-blue-50">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteTransaction('${type}', ${transaction.id})" 
+                                    class="text-red-500 hover:text-red-700 transition-colors duration-200 p-2 rounded-lg hover:bg-red-50">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -863,67 +1140,73 @@
             form.reset();
             renderCategories();
             saveData();
+            showNotification('✨ Kategori berhasil ditambahkan!', 'success');
         }
 
-        // Render categories
+        // Render categories with beautiful design
         function renderCategories() {
             const container = document.getElementById('categories-container');
             
             container.innerHTML = categories.map((category, index) => `
-                <div class="category-card bg-white p-6 rounded-xl card-shadow" style="border-left-color: ${category.color}">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold" style="color: ${category.color}">${category.name}</h3>
-                        <button onclick="deleteCategory(${index})" class="text-red-500 hover:text-red-700">
+                <div class="category-card glass-card p-6 rounded-2xl fade-in" style="border-left-color: ${category.color}; animation-delay: ${index * 0.1}s">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold" style="color: ${category.color}">
+                            <i class="fas fa-tag mr-2"></i>
+                            ${category.name}
+                        </h3>
+                        <button onclick="deleteCategory(${index})" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-all duration-200">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
                     
                     <!-- Add Item Form -->
-                    <form onsubmit="addWishlistItem(event, ${index})" class="mb-4 p-4 bg-gray-50 rounded-lg">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-                            <input type="text" placeholder="Nama Barang" class="p-2 border rounded-lg" required>
-                            <input type="number" placeholder="Harga" class="p-2 border rounded-lg" required>
-                            <select class="p-2 border rounded-lg" required>
-                                <option value="">Tingkat Kepentingan</option>
-                                <option value="sangat-penting">Sangat Penting</option>
-                                <option value="penting">Penting</option>
-                                <option value="sedikit-penting">Sedikit Penting</option>
-                                <option value="tidak-penting">Tidak Terlalu Penting</option>
+                    <form onsubmit="addWishlistItem(event, ${index})" class="mb-6 p-5 bg-gradient-to-r from-gray-50 to-white rounded-2xl">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                            <input type="text" placeholder="🛍️ Nama Barang" class="form-input p-3 border rounded-xl" required>
+                            <input type="number" placeholder="💰 Harga" class="form-input p-3 border rounded-xl" required>
+                            <select class="form-input p-3 border rounded-xl" required>
+                                <option value="">⭐ Tingkat Kepentingan</option>
+                                <option value="sangat-penting">🔥 Sangat Penting</option>
+                                <option value="penting">⚡ Penting</option>
+                                <option value="sedikit-penting">💫 Sedikit Penting</option>
+                                <option value="tidak-penting">💤 Tidak Terlalu Penting</option>
                             </select>
-                            <input type="url" placeholder="Link Barang" class="p-2 border rounded-lg">
-                            <input type="text" placeholder="Keterangan" class="p-2 border rounded-lg">
+                            <input type="url" placeholder="🔗 Link Barang" class="form-input p-3 border rounded-xl">
+                            <input type="text" placeholder="📝 Keterangan" class="form-input p-3 border rounded-xl">
                         </div>
-                        <button type="submit" class="mt-3 px-4 py-2 text-white rounded-lg hover:opacity-90 transition-colors" 
-                                style="background-color: ${category.color}">
+                        <button type="submit" class="mt-4 px-6 py-3 text-white rounded-xl font-medium transition-all duration-300 hover:transform hover:scale-105" 
+                                style="background: linear-gradient(135deg, ${category.color}, ${category.color}dd)">
                             <i class="fas fa-plus mr-2"></i>Tambah Barang
                         </button>
                     </form>
 
                     <!-- Items List -->
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         ${category.items.map((item, itemIndex) => `
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                <div class="flex-1">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <h4 class="font-semibold text-lg">${item.name}</h4>
-                                        <span class="font-bold text-xl" style="color: ${category.color}">
-                                            ${formatCurrency(item.price)}
-                                        </span>
+                            <div class="glass-card p-5 rounded-xl transition-all duration-300 hover:transform hover:scale-102">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <h4 class="font-semibold text-lg text-gray-800">${item.name}</h4>
+                                            <span class="font-bold text-2xl bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                                                ${formatCurrency(item.price)}
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-wrap gap-3 text-sm mb-2">
+                                            <span class="px-3 py-1 rounded-full ${getPriorityClass(item.priority)} font-medium">
+                                                ${getPriorityText(item.priority)}
+                                            </span>
+                                            ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 transition-colors duration-200 flex items-center">
+                                                <i class="fas fa-external-link-alt mr-1"></i>Lihat Barang
+                                            </a>` : ''}
+                                        </div>
+                                        ${item.notes ? `<p class="text-gray-600 mt-2 italic">${item.notes}</p>` : ''}
                                     </div>
-                                    <div class="flex flex-wrap gap-2 text-sm">
-                                        <span class="px-2 py-1 rounded-full ${getPriorityClass(item.priority)}">
-                                            ${getPriorityText(item.priority)}
-                                        </span>
-                                        ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline">
-                                            <i class="fas fa-external-link-alt mr-1"></i>Lihat Barang
-                                        </a>` : ''}
-                                    </div>
-                                    ${item.notes ? `<p class="text-gray-600 mt-2">${item.notes}</p>` : ''}
+                                    <button onclick="deleteWishlistItem(${index}, ${itemIndex})" 
+                                            class="ml-4 text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-all duration-200">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
-                                <button onclick="deleteWishlistItem(${index}, ${itemIndex})" 
-                                        class="ml-4 text-red-500 hover:text-red-700">
-                                    <i class="fas fa-trash"></i>
-                                </button>
                             </div>
                         `).join('')}
                     </div>
@@ -949,23 +1232,26 @@
             form.reset();
             renderCategories();
             saveData();
+            showNotification('🛍️ Barang berhasil ditambahkan!', 'success');
         }
 
         // Delete category
         function deleteCategory(index) {
-            if (confirm('Hapus kategori ini beserta semua barangnya?')) {
+            if (confirm('🗑️ Hapus kategori ini beserta semua barangnya?')) {
                 categories.splice(index, 1);
                 renderCategories();
                 saveData();
+                showNotification('Kategori berhasil dihapus!', 'info');
             }
         }
 
         // Delete wishlist item
         function deleteWishlistItem(categoryIndex, itemIndex) {
-            if (confirm('Hapus barang ini?')) {
+            if (confirm('🗑️ Hapus barang ini?')) {
                 categories[categoryIndex].items.splice(itemIndex, 1);
                 renderCategories();
                 saveData();
+                showNotification('Barang berhasil dihapus!', 'info');
             }
         }
 
@@ -989,70 +1275,74 @@
             form.reset();
             renderTargets();
             saveData();
+            showNotification('🎯 Target berhasil ditambahkan!', 'success');
         }
 
-        // Render targets
+        // Render targets with beautiful progress bars
         function renderTargets() {
             const container = document.getElementById('targets-list');
             
-            container.innerHTML = targets.map(target => {
+            container.innerHTML = targets.map((target, index) => {
                 const progress = (target.saved / target.amount) * 100;
                 const daysLeft = Math.ceil((new Date(target.deadline) - new Date()) / (1000 * 60 * 60 * 24));
                 
                 return `
-                    <div class="bg-white p-6 rounded-xl card-shadow">
+                    <div class="glass-card p-6 rounded-2xl fade-in" style="animation-delay: ${index * 0.1}s">
                         <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-lg font-bold text-blue-800">${target.name}</h3>
+                            <h3 class="text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
+                                <i class="tree-icon fas fa-seedling mr-2"></i>
+                                ${target.name}
+                            </h3>
                             <div class="flex space-x-2">
-                                <button onclick="addSavings(${target.id})" class="text-green-500 hover:text-green-700">
+                                <button onclick="addSavings(${target.id})" class="text-green-500 hover:text-green-700 p-2 rounded-lg hover:bg-green-50 transition-all duration-200">
                                     <i class="fas fa-plus-circle"></i>
                                 </button>
-                                <button onclick="deleteTarget(${target.id})" class="text-red-500 hover:text-red-700">
+                                <button onclick="deleteTarget(${target.id})" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-all duration-200">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </div>
                         
-                        <div class="mb-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>Progress</span>
-                                <span>${Math.round(progress)}%</span>
+                        <div class="mb-6">
+                            <div class="flex justify-between text-sm mb-2 font-medium">
+                                <span class="text-gray-600">Progress</span>
+                                <span class="text-green-600">${Math.round(progress)}%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="bg-green-500 h-3 rounded-full transition-all duration-300" 
+                            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                                <div class="progress-bar h-4 rounded-full" 
                                      style="width: ${Math.min(progress, 100)}%"></div>
                             </div>
                         </div>
                         
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between">
-                                <span>Target:</span>
-                                <span class="font-semibold">${formatCurrency(target.amount)}</span>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                                <span class="text-gray-600">🎯 Target:</span>
+                                <span class="font-bold text-blue-600">${formatCurrency(target.amount)}</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Terkumpul:</span>
-                                <span class="font-semibold text-green-600">${formatCurrency(target.saved)}</span>
+                            <div class="flex justify-between items-center p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+                                <span class="text-gray-600">💰 Terkumpul:</span>
+                                <span class="font-bold text-green-600">${formatCurrency(target.saved)}</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Sisa:</span>
-                                <span class="font-semibold text-red-600">${formatCurrency(target.amount - target.saved)}</span>
+                            <div class="flex justify-between items-center p-3 bg-gradient-to-r from-red-50 to-pink-50 rounded-xl">
+                                <span class="text-gray-600">📊 Sisa:</span>
+                                <span class="font-bold text-red-600">${formatCurrency(target.amount - target.saved)}</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Tenggat:</span>
-                                <span class="font-semibold ${daysLeft < 0 ? 'text-red-600' : daysLeft < 7 ? 'text-orange-600' : 'text-gray-600'}">
-                                    ${daysLeft < 0 ? 'Terlambat' : `${daysLeft} hari lagi`}
+                            <div class="flex justify-between items-center p-3 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl">
+                                <span class="text-gray-600">⏰ Tenggat:</span>
+                                <span class="font-bold ${daysLeft < 0 ? 'text-red-600' : daysLeft < 7 ? 'text-orange-600' : 'text-gray-600'}">
+                                    ${daysLeft < 0 ? '⚠️ Terlambat' : `${daysLeft} hari lagi`}
                                 </span>
                             </div>
                         </div>
                         
-                        <div class="mt-3">
-                            <span class="px-2 py-1 rounded-full text-xs ${getPriorityClass(target.priority)}">
+                        <div class="mt-4">
+                            <span class="px-3 py-2 rounded-full text-sm font-medium ${getPriorityClass(target.priority)}">
                                 <i class="tree-icon fas fa-leaf mr-1"></i>
                                 ${getPriorityText(target.priority)}
                             </span>
                         </div>
                         
-                        ${target.notes ? `<p class="text-gray-600 text-sm mt-3">${target.notes}</p>` : ''}
+                        ${target.notes ? `<p class="text-gray-600 text-sm mt-4 p-3 bg-gray-50 rounded-xl italic">${target.notes}</p>` : ''}
                     </div>
                 `;
             }).join('');
@@ -1062,21 +1352,23 @@
         function addSavings(targetId) {
             const target = targets.find(t => t.id === targetId);
             if (target) {
-                const amount = prompt('Tambah tabungan (Rp):');
+                const amount = prompt('💰 Tambah tabungan (Rp):');
                 if (amount && !isNaN(amount)) {
                     target.saved += parseInt(amount);
                     renderTargets();
                     saveData();
+                    showNotification('💰 Tabungan berhasil ditambahkan!', 'success');
                 }
             }
         }
 
         // Delete target
         function deleteTarget(targetId) {
-            if (confirm('Hapus target ini?')) {
+            if (confirm('🗑️ Hapus target ini?')) {
                 targets = targets.filter(t => t.id !== targetId);
                 renderTargets();
                 saveData();
+                showNotification('Target berhasil dihapus!', 'info');
             }
         }
 
@@ -1102,7 +1394,7 @@
                 calculatorValue = result.toString();
                 document.getElementById('calculator-display').value = calculatorValue;
             } catch (error) {
-                alert('Error dalam perhitungan');
+                showNotification('Error dalam perhitungan!', 'error');
                 clearCalculator();
             }
         }
@@ -1126,25 +1418,25 @@
 
         function getPriorityClass(priority) {
             const classes = {
-                'sangat-penting': 'bg-red-100 text-red-800',
-                'penting': 'bg-orange-100 text-orange-800',
-                'sedikit-penting': 'bg-yellow-100 text-yellow-800',
-                'tidak-penting': 'bg-gray-100 text-gray-800'
+                'sangat-penting': 'bg-gradient-to-r from-red-100 to-pink-100 text-red-800',
+                'penting': 'bg-gradient-to-r from-orange-100 to-yellow-100 text-orange-800',
+                'sedikit-penting': 'bg-gradient-to-r from-yellow-100 to-green-100 text-yellow-800',
+                'tidak-penting': 'bg-gradient-to-r from-gray-100 to-blue-100 text-gray-800'
             };
-            return classes[priority] || 'bg-gray-100 text-gray-800';
+            return classes[priority] || 'bg-gradient-to-r from-gray-100 to-blue-100 text-gray-800';
         }
 
         function getPriorityText(priority) {
             const texts = {
-                'sangat-penting': 'Sangat Penting',
-                'penting': 'Penting',
-                'sedikit-penting': 'Sedikit Penting',
-                'tidak-penting': 'Tidak Terlalu Penting'
+                'sangat-penting': '🔥 Sangat Penting',
+                'penting': '⚡ Penting',
+                'sedikit-penting': '💫 Sedikit Penting',
+                'tidak-penting': '💤 Tidak Terlalu Penting'
             };
             return texts[priority] || priority;
         }
 
-        // Auto-save every 30 seconds as backup
+        // Enhanced auto-save every 30 seconds
         setInterval(() => {
             saveData();
         }, 30000);
@@ -1154,11 +1446,16 @@
             saveData();
         });
 
-        // Initialize app
+        // Initialize app with beautiful animations
         document.addEventListener('DOMContentLoaded', () => {
             initializeData();
             updateDashboard();
+            
+            // Add smooth scroll behavior
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985ffd67538f898f',t:'MTc1OTAyODQyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9860182d00f622a1',t:'MTc1OTAyOTUxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
