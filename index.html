@@ -86,6 +86,27 @@
             color: #4caf50;
             font-size: 1.2em;
         }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .success { background: #4caf50; }
+        .error { background: #f44336; }
+        .info { background: #2196f3; }
     </style>
 </head>
 <body class="pastel-blue min-h-screen">
@@ -98,6 +119,9 @@
                     Keuangan Pribadi
                 </h1>
                 <p class="text-blue-600 text-sm">Kelola uang dengan mudah</p>
+                <div class="mt-2 text-xs text-blue-500" id="last-saved">
+                    <!-- Last saved info will appear here -->
+                </div>
             </div>
 
             <!-- Navigation Menu -->
@@ -115,6 +139,29 @@
                     <button onclick="showPage('targets')" class="w-full text-left p-3 rounded-lg bg-white hover:bg-blue-50 transition-colors duration-200 card-shadow">
                         <i class="fas fa-bullseye mr-3 text-green-500"></i>
                         Target & Utang
+                    </button>
+                </div>
+            </div>
+
+            <!-- Backup & Restore -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-blue-800 mb-4">
+                    <i class="fas fa-shield-alt mr-2"></i>
+                    Backup Data
+                </h3>
+                <div class="space-y-2">
+                    <button onclick="exportData()" class="w-full text-left p-3 rounded-lg bg-white hover:bg-green-50 transition-colors duration-200 card-shadow">
+                        <i class="fas fa-download mr-3 text-green-500"></i>
+                        Download Backup
+                    </button>
+                    <label class="w-full text-left p-3 rounded-lg bg-white hover:bg-orange-50 transition-colors duration-200 card-shadow cursor-pointer block">
+                        <i class="fas fa-upload mr-3 text-orange-500"></i>
+                        Upload Backup
+                        <input type="file" accept=".json" onchange="importData(event)" class="hidden">
+                    </label>
+                    <button onclick="clearAllData()" class="w-full text-left p-3 rounded-lg bg-white hover:bg-red-50 transition-colors duration-200 card-shadow">
+                        <i class="fas fa-trash mr-3 text-red-500"></i>
+                        Hapus Semua Data
                     </button>
                 </div>
             </div>
@@ -348,8 +395,210 @@
         let targets = [];
         let calculatorValue = '';
 
+        // Storage key
+        const STORAGE_KEY = 'keuangan-app-data-v2';
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Save data to localStorage with multiple fallbacks
+        function saveData() {
+            try {
+                const data = {
+                    transactions: transactions,
+                    categories: categories,
+                    targets: targets,
+                    currentUser: currentUser,
+                    currentMonth: currentMonth,
+                    lastSaved: new Date().toISOString(),
+                    version: '2.0'
+                };
+                
+                const dataString = JSON.stringify(data);
+                
+                // Primary storage
+                localStorage.setItem(STORAGE_KEY, dataString);
+                
+                // Backup storage with different keys
+                localStorage.setItem(STORAGE_KEY + '-backup1', dataString);
+                localStorage.setItem(STORAGE_KEY + '-backup2', dataString);
+                
+                // Update last saved display
+                document.getElementById('last-saved').textContent = 
+                    `Tersimpan: ${new Date().toLocaleString('id-ID')}`;
+                
+                console.log('✅ Data saved successfully');
+                return true;
+            } catch (error) {
+                console.error('❌ Error saving data:', error);
+                showNotification('Gagal menyimpan data!', 'error');
+                return false;
+            }
+        }
+
+        // Load data from localStorage with fallbacks
+        function loadData() {
+            const keys = [STORAGE_KEY, STORAGE_KEY + '-backup1', STORAGE_KEY + '-backup2'];
+            
+            for (let key of keys) {
+                try {
+                    const savedData = localStorage.getItem(key);
+                    if (savedData) {
+                        const data = JSON.parse(savedData);
+                        
+                        // Validate data structure
+                        if (data.transactions && data.categories !== undefined && data.targets !== undefined) {
+                            transactions = data.transactions || {};
+                            categories = data.categories || [];
+                            targets = data.targets || [];
+                            currentUser = data.currentUser || 'user1';
+                            currentMonth = data.currentMonth || 'jan';
+                            
+                            console.log('✅ Data loaded from:', key);
+                            showNotification('Data berhasil dimuat!', 'success');
+                            
+                            if (data.lastSaved) {
+                                document.getElementById('last-saved').textContent = 
+                                    `Dimuat: ${new Date(data.lastSaved).toLocaleString('id-ID')}`;
+                            }
+                            
+                            return true;
+                        }
+                    }
+                } catch (error) {
+                    console.warn(`Failed to load from ${key}:`, error);
+                }
+            }
+            
+            console.log('ℹ️ No saved data found, using defaults');
+            return false;
+        }
+
+        // Export data as JSON file
+        function exportData() {
+            try {
+                const data = {
+                    transactions: transactions,
+                    categories: categories,
+                    targets: targets,
+                    exportDate: new Date().toISOString(),
+                    version: '2.0',
+                    appName: 'Keuangan Pribadi'
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `keuangan-backup-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                URL.revokeObjectURL(url);
+                showNotification('Backup berhasil didownload!', 'success');
+            } catch (error) {
+                console.error('Export error:', error);
+                showNotification('Gagal export data!', 'error');
+            }
+        }
+
+        // Import data from JSON file
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Validate imported data
+                    if (!data.transactions || data.categories === undefined || data.targets === undefined) {
+                        throw new Error('Invalid backup file format');
+                    }
+                    
+                    if (confirm('⚠️ Import akan mengganti SEMUA data yang ada!\n\nLanjutkan?')) {
+                        transactions = data.transactions || {};
+                        categories = data.categories || [];
+                        targets = data.targets || [];
+                        
+                        // Save imported data
+                        if (saveData()) {
+                            // Update UI
+                            updateUserTabs();
+                            updateMonthTabs();
+                            updateDashboard();
+                            renderCategories();
+                            renderTargets();
+                            
+                            showNotification('Data berhasil diimport!', 'success');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showNotification('File backup tidak valid!', 'error');
+                }
+                
+                // Reset file input
+                event.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+
+        // Clear all data
+        function clearAllData() {
+            if (confirm('⚠️ HAPUS SEMUA DATA?\n\nTindakan ini tidak dapat dibatalkan!')) {
+                if (confirm('🚨 Yakin 100% ingin menghapus semua data?')) {
+                    // Clear localStorage
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(STORAGE_KEY + '-backup1');
+                    localStorage.removeItem(STORAGE_KEY + '-backup2');
+                    
+                    // Reset variables
+                    transactions = {};
+                    categories = [];
+                    targets = [];
+                    currentUser = 'user1';
+                    currentMonth = 'jan';
+                    
+                    // Reinitialize
+                    initializeData();
+                    showNotification('Semua data telah dihapus!', 'info');
+                }
+            }
+        }
+
         // Initialize data structure
         function initializeData() {
+            // Try to load saved data first
+            if (loadData()) {
+                updateUserTabs();
+                updateMonthTabs();
+                renderCategories();
+                renderTargets();
+                updateDashboard();
+                return;
+            }
+            
+            // No saved data, initialize with defaults
             const users = ['user1', 'user2', 'user3'];
             const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
             
@@ -371,26 +620,53 @@
             ];
 
             renderCategories();
+            saveData(); // Save initial data
+        }
+
+        // Update user tabs to reflect current user
+        function updateUserTabs() {
+            document.querySelectorAll('.tab-binder').forEach((tab, index) => {
+                tab.classList.remove('active');
+                if ((index === 0 && currentUser === 'user1') ||
+                    (index === 1 && currentUser === 'user2') ||
+                    (index === 2 && currentUser === 'user3')) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        // Update month tabs to reflect current month
+        function updateMonthTabs() {
+            const monthMap = {
+                'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'may': 4, 'jun': 5,
+                'jul': 6, 'aug': 7, 'sep': 8, 'oct': 9, 'nov': 10, 'dec': 11
+            };
+            
+            document.querySelectorAll('.month-btn').forEach((btn, index) => {
+                btn.classList.remove('active', 'bg-blue-500', 'text-white');
+                btn.classList.add('bg-blue-200', 'text-blue-800');
+                
+                if (index === monthMap[currentMonth]) {
+                    btn.classList.remove('bg-blue-200', 'text-blue-800');
+                    btn.classList.add('active', 'bg-blue-500', 'text-white');
+                }
+            });
         }
 
         // User switching
         function switchUser(userId) {
             currentUser = userId;
-            document.querySelectorAll('.tab-binder').forEach(tab => tab.classList.remove('active'));
-            event.target.closest('.tab-binder').classList.add('active');
+            updateUserTabs();
             updateDashboard();
+            saveData();
         }
 
         // Month switching
         function switchMonth(month) {
             currentMonth = month;
-            document.querySelectorAll('.month-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-blue-500', 'text-white');
-                btn.classList.add('bg-blue-200', 'text-blue-800');
-            });
-            event.target.classList.remove('bg-blue-200', 'text-blue-800');
-            event.target.classList.add('active', 'bg-blue-500', 'text-white');
+            updateMonthTabs();
             updateDashboard();
+            saveData();
         }
 
         // Page switching
@@ -404,7 +680,6 @@
         function addTransaction(event, type) {
             event.preventDefault();
             const form = event.target;
-            const formData = new FormData(form);
             const inputs = form.querySelectorAll('input');
             
             const transaction = {
@@ -417,13 +692,17 @@
             transactions[currentUser][currentMonth][type].push(transaction);
             form.reset();
             updateDashboard();
+            saveData();
         }
 
         // Delete transaction
         function deleteTransaction(type, id) {
-            transactions[currentUser][currentMonth][type] = 
-                transactions[currentUser][currentMonth][type].filter(t => t.id !== id);
-            updateDashboard();
+            if (confirm('Hapus transaksi ini?')) {
+                transactions[currentUser][currentMonth][type] = 
+                    transactions[currentUser][currentMonth][type].filter(t => t.id !== id);
+                updateDashboard();
+                saveData();
+            }
         }
 
         // Edit transaction
@@ -437,6 +716,7 @@
                     transaction.amount = parseInt(newAmount) || transaction.amount;
                     transaction.description = newDescription || transaction.description;
                     updateDashboard();
+                    saveData();
                 }
             }
         }
@@ -501,6 +781,7 @@
             categories.push(category);
             form.reset();
             renderCategories();
+            saveData();
         }
 
         // Render categories
@@ -586,6 +867,7 @@
             categories[categoryIndex].items.push(item);
             form.reset();
             renderCategories();
+            saveData();
         }
 
         // Delete category
@@ -593,13 +875,17 @@
             if (confirm('Hapus kategori ini beserta semua barangnya?')) {
                 categories.splice(index, 1);
                 renderCategories();
+                saveData();
             }
         }
 
         // Delete wishlist item
         function deleteWishlistItem(categoryIndex, itemIndex) {
-            categories[categoryIndex].items.splice(itemIndex, 1);
-            renderCategories();
+            if (confirm('Hapus barang ini?')) {
+                categories[categoryIndex].items.splice(itemIndex, 1);
+                renderCategories();
+                saveData();
+            }
         }
 
         // Add target
@@ -621,6 +907,7 @@
             targets.push(target);
             form.reset();
             renderTargets();
+            saveData();
         }
 
         // Render targets
@@ -698,6 +985,7 @@
                 if (amount && !isNaN(amount)) {
                     target.saved += parseInt(amount);
                     renderTargets();
+                    saveData();
                 }
             }
         }
@@ -707,6 +995,7 @@
             if (confirm('Hapus target ini?')) {
                 targets = targets.filter(t => t.id !== targetId);
                 renderTargets();
+                saveData();
             }
         }
 
@@ -774,10 +1063,21 @@
             return texts[priority] || priority;
         }
 
+        // Auto-save every 30 seconds as backup
+        setInterval(() => {
+            saveData();
+        }, 30000);
+
+        // Save data when page is about to close
+        window.addEventListener('beforeunload', () => {
+            saveData();
+        });
+
         // Initialize app
-        initializeData();
-        updateDashboard();
-        renderTargets();
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeData();
+            updateDashboard();
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985fdb51d7a8ff8f',t:'MTc1OTAyNzAyNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985ff56da1e99fbc',t:'MTc1OTAyODA5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
